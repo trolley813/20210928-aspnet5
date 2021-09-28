@@ -46,6 +46,7 @@ namespace _20210928.Controllers
         // GET: Reviews/Create
         public IActionResult Create()
         {
+            ViewData["Items"] = _context.Items.ToList();
             return View();
         }
 
@@ -54,7 +55,7 @@ namespace _20210928.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Text,Score")] Review review)
+        public async Task<IActionResult> Create([Bind("Id,Text,Score,Item")] Review review)
         {
             if (ModelState.IsValid)
             {

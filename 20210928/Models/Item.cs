@@ -12,5 +12,10 @@ namespace _20210928.Models
         public string Description { get; set; }
         public decimal Price { get; set; }
         public List<Review> Reviews { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Id}";
+        }
     }
 }
