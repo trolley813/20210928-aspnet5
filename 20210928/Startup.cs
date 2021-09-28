@@ -27,7 +27,7 @@ namespace _20210928
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<StoreContext>(options => options.UseSqlite());
+            services.AddDbContext<StoreContext>(options => options.UseSqlite("DataSource=store.sqlite3"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

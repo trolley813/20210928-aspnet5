@@ -15,6 +15,15 @@ namespace _20210928.Data
 
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Review>()
+                .HasOne(r => r.Item)
+                .WithMany(i => i.Reviews);
+            base.OnModelCreating(builder);
+        }
+
         public DbSet<Item> Items { get; set; }
+        public DbSet<Review> Reviews { get; set; }
     }
 }
