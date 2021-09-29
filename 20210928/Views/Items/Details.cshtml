@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Details";
+    Review r = null;
 }
 
 <h1>Details</h1>
@@ -33,4 +34,22 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
+</div>
+<div>
+    <form asp-action="AddReview" asp-route-id="@Model.Id">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="@r.Text" class="control-label"></label>
+            <input asp-for="@r.Text" class="form-control" />
+            <span asp-validation-for="@r.Text" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@r.Score" class="control-label"></label>
+            <input asp-for="@r.Score" class="form-control" />
+            <span asp-validation-for="@r.Score" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Add Review" class="btn btn-primary" />
+        </div>
+    </form>
 </div>

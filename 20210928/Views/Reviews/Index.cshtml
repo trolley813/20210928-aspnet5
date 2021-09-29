@@ -33,9 +33,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Score)
             </td>
-            <th>
-                @Html.DisplayFor(modelItem => item.Item.Name)
-            </th>
+            <td>
+                <a asp-controller="Items" asp-action="Details" asp-route-id="@item.Item.Id">@Html.DisplayFor(modelItem => item.Item.Name)</a>
+            </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

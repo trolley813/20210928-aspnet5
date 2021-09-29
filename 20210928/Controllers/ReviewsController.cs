@@ -22,7 +22,7 @@ namespace _20210928.Controllers
         // GET: Reviews
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Reviews.ToListAsync());
+            return View(await _context.Reviews.Include(r => r.Item).ToListAsync());
         }
 
         // GET: Reviews/Details/5
@@ -60,6 +60,7 @@ namespace _20210928.Controllers
             if (ModelState.IsValid)
             {
                 review.Id = Guid.NewGuid();
+                review.Item = _context.Items.FirstOrDefault(item => item.Id == review.Item.Id);
                 _context.Add(review);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

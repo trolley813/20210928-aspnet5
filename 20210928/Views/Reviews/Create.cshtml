@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Create";
     var items = ViewData["Items"] as List<Item>;
-    SelectList itemsSelectList = items != null ? new SelectList(items) : null;
+    SelectList itemsSelectList = items != null ? new SelectList(items, "Id", "Name") : null;
 }
 
 <h1>Create</h1>

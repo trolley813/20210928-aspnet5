@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using _20210928.Data;
 using _20210928.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace _20210928.Controllers
 {
@@ -149,6 +150,25 @@ namespace _20210928.Controllers
         private bool ItemExists(Guid id)
         {
             return _context.Items.Any(e => e.Id == id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddReview(Guid id, IFormCollection collection)
+        {
+            if (ModelState.IsValid)
+            {
+                Review review = new Review
+                {
+                    Text = collection["r.Text"],
+                    Score = Convert.ToInt32(collection["r.Score"])
+                };
+                review.Id = Guid.NewGuid();
+                review.Item = _context.Items.FirstOrDefault(item => item.Id == id);
+                _context.Add(review);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return BadRequest();
         }
     }
 }
