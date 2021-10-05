@@ -2,9 +2,26 @@
 
 @{
     ViewData["Title"] = "Index";
+    int pageCount = (ViewData["PageCount"] as int?) ?? 0;
+    int currentPage = (ViewData["CurrentPage"] as int?) ?? 1;
+    string sortBy = ViewData["SortBy"] as string ?? "";
 }
 
 <h1>Index</h1>
+
+<div>
+    @if (currentPage > 1)
+    {<a asp-action="Index" asp-route-page="1" asp-route-sort-by="@sortBy"> First </a>}
+    @if (currentPage > 1)
+    {<a asp-action="Index" asp-route-page="@(currentPage - 1)" asp-route-sort-by="@sortBy"> Previous </a>}
+
+    Page @currentPage of @pageCount
+
+    @if (currentPage < pageCount)
+    {<a asp-action="Index" asp-route-page="@(currentPage + 1)" asp-route-sort-by="@sortBy"> Next </a>}
+    @if (currentPage < pageCount)
+    {<a asp-action="Index" asp-route-page="@pageCount" asp-route-sort-by="@sortBy"> Last </a>}
+</div>
 
 <p>
     <a asp-action="Create">Create New</a>

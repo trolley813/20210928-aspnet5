@@ -21,9 +21,30 @@ namespace _20210928.Controllers
         }
 
         // GET: Items
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1, 
+            [FromQuery(Name = "sort-by")] string sortBy = "")
         {
-            return View(await _context.Items.ToListAsync());
+            IQueryable<Item> sortedItems = sortBy switch
+            {
+                "name" => _context.Items.OrderBy(item => item.Name),
+                "description" => _context.Items.OrderBy(item => item.Description),
+                "price" => _context.Items.OrderBy(item => item.Price),
+                _ => _context.Items
+            };
+
+            int pageSize = 3;
+
+            int pageCount = 
+                (int)Math.Ceiling(_context.Items.Count() / (double)pageSize);
+
+            ViewData["PageCount"] = pageCount;
+            ViewData["CurrentPage"] = page;
+            ViewData["SortBy"] = sortBy;
+
+            return View(await sortedItems
+                .Skip(pageSize * (page - 1))
+                .Take(pageSize)
+                .ToListAsync());
         }
 
         // GET: Items/Details/5

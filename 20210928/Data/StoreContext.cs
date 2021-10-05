@@ -20,6 +20,9 @@ namespace _20210928.Data
             builder.Entity<Review>()
                 .HasOne(r => r.Item)
                 .WithMany(i => i.Reviews);
+            builder.Entity<Item>()
+                .Property(i => i.Price)
+                .HasConversion<Double>();
             base.OnModelCreating(builder);
         }
 
