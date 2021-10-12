@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using _20210928.Data;
 using _20210928.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace _20210928.Controllers
 {
+    [Authorize]
     public class ReviewsController : Controller
     {
         private readonly StoreContext _context;
