@@ -32,6 +32,8 @@ namespace _20210928
             services.AddDbContext<StoreContext>(options => options.UseSqlite(
                 Configuration.GetConnectionString("StoreContextConnection")
                ));
+
+            services.AddAuthentication();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +54,7 @@ namespace _20210928
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

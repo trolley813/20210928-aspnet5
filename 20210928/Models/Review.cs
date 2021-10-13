@@ -15,7 +15,7 @@ namespace _20210928.Models
         [Required]
         public Item Item { get; set; }
         [Required]
-        public StoreUser User { get; set; }
+        public string UserId { get; set; }
 
     }
 }

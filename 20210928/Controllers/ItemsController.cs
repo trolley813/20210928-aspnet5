@@ -62,6 +62,7 @@ namespace _20210928.Controllers
             }
 
             var item = await _context.Items
+                .Include(i => i.Reviews)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (item == null)
             {
@@ -192,7 +193,7 @@ namespace _20210928.Controllers
                 };
                 review.Id = Guid.NewGuid();
                 review.Item = _context.Items.FirstOrDefault(item => item.Id == id);
-                review.User = await _signInManager.UserManager.GetUserAsync(User);
+                review.UserId = (await _signInManager.UserManager.GetUserAsync(User)).Id;
                 _context.Add(review);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

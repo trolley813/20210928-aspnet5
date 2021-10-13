@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace _20210928.Controllers
 {
-    [Authorize]
+    [Authorize("Admin")]
     public class ReviewsController : Controller
     {
         private readonly StoreContext _context;
