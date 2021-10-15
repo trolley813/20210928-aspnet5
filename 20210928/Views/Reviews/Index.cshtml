@@ -1,4 +1,7 @@
-﻿@model IEnumerable<_20210928.Models.Review>
+﻿@using Microsoft.AspNetCore.Identity
+@using _20210928.Areas.Identity.Data
+@model IEnumerable<_20210928.Models.Review>
+@inject UserManager<StoreUser> UserManager
 
 @{
     ViewData["Title"] = "Index";
@@ -21,6 +24,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Item)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -35,6 +41,9 @@
             </td>
             <td>
                 <a asp-controller="Items" asp-action="Details" asp-route-id="@item.Item.Id">@Html.DisplayFor(modelItem => item.Item.Name)</a>
+            </td>
+            <td>
+                @((await UserManager.FindByIdAsync(item.UserId))?.UserName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

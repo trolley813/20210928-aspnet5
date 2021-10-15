@@ -8,16 +8,22 @@ using Microsoft.EntityFrameworkCore;
 using _20210928.Data;
 using _20210928.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using _20210928.Areas.Identity.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace _20210928.Controllers
 {
     public class ItemsController : Controller
     {
         private readonly StoreContext _context;
+        private readonly SignInManager<StoreUser> _signInManager;
 
-        public ItemsController(StoreContext context)
+        public ItemsController(StoreContext context, 
+            SignInManager<StoreUser> signInManager)
         {
             _context = context;
+            _signInManager = signInManager;
         }
 
         // GET: Items
@@ -56,6 +62,7 @@ namespace _20210928.Controllers
             }
 
             var item = await _context.Items
+                .Include(i => i.Reviews)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (item == null)
             {
@@ -173,6 +180,7 @@ namespace _20210928.Controllers
             return _context.Items.Any(e => e.Id == id);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddReview(Guid id, IFormCollection collection)
         {
@@ -185,6 +193,7 @@ namespace _20210928.Controllers
                 };
                 review.Id = Guid.NewGuid();
                 review.Item = _context.Items.FirstOrDefault(item => item.Id == id);
+                review.UserId = (await _signInManager.UserManager.GetUserAsync(User)).Id;
                 _context.Add(review);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

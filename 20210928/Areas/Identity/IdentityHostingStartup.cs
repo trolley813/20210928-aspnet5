@@ -20,7 +20,7 @@ namespace _20210928.Areas.Identity
                     options.UseSqlite(
                         context.Configuration.GetConnectionString("UsersContextConnection")));
 
-                services.AddDefaultIdentity<StoreUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<StoreUser>(options => options.SignIn.RequireConfirmedAccount = false)
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<UsersContext>();
             });

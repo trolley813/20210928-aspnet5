@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _20210928.Areas.Identity.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,5 +14,8 @@ namespace _20210928.Models
         public int Score { get; set; }
         [Required]
         public Item Item { get; set; }
+        [Required]
+        public string UserId { get; set; }
+
     }
 }

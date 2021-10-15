@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Details";
     Review r = null;
+    double averageScore = 0;
 }
 
 <h1>Details</h1>
@@ -35,6 +36,16 @@
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+<div>
+    Reviews: @(Model.Reviews.Count)
+    @if (Model.Reviews.Count > 0)
+    {
+        averageScore = Model.Reviews.Select(r => r.Score).Average();
+    }
+     (average score: @averageScore)
+</div>
+
 <div>
     <form asp-action="AddReview" asp-route-id="@Model.Id">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
