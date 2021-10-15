@@ -1,7 +1,9 @@
+using _20210928.Areas.Identity.Data;
 using _20210928.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,7 +37,9 @@ namespace _20210928
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, 
+            IWebHostEnvironment env,
+            IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -61,6 +65,45 @@ namespace _20210928
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            AddRolesAndUsers(serviceProvider);
+        }
+
+        private async void AddRolesAndUsers(IServiceProvider serviceProvider)
+        {
+            UserManager<StoreUser> userManager = 
+                serviceProvider.GetRequiredService<UserManager<StoreUser>>();
+            RoleManager<IdentityRole> roleManager =
+                serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            string[] roles = { "Admin", "Staff" };
+
+            foreach(var role in roles)
+            {
+                bool roleExists = await roleManager.RoleExistsAsync(role);
+                if (!roleExists)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(role));
+                }
+            }
+
+            string generatedAdminUserName = "generated_admin@example.com";
+            string generatedAdminPassword = "testPassword1234!";
+
+            if (await userManager.FindByEmailAsync(generatedAdminUserName) == null)
+            {
+                var generatedAdmin = new StoreUser { 
+                    UserName = generatedAdminUserName,
+                    EmailConfirmed = true
+                };
+                await userManager.CreateAsync(
+                    generatedAdmin, 
+                    generatedAdminPassword);
+                foreach (var role in roles)
+                {
+                    await userManager.AddToRoleAsync(generatedAdmin, role);
+                }
+            }
         }
     }
 }

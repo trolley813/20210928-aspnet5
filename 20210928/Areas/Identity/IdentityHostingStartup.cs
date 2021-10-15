@@ -21,6 +21,7 @@ namespace _20210928.Areas.Identity
                         context.Configuration.GetConnectionString("UsersContextConnection")));
 
                 services.AddDefaultIdentity<StoreUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<UsersContext>();
             });
         }
