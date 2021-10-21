@@ -36,6 +36,8 @@ namespace _20210928
                ));
 
             services.AddAuthentication();
+
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +57,9 @@ namespace _20210928
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.UseRouting();
 
