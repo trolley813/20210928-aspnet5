@@ -1,0 +1,17 @@
+<root>
+    <data name="First" xml:space="preserve">
+        <value>Первая</value>
+    </data>
+    <data name="Last" xml:space="preserve">
+        <value>Последняя</value>
+    </data>
+    <data name="Previous" xml:space="preserve">
+        <value>Предыдущая</value>
+    </data>
+    <data name="Next" xml:space="preserve">
+        <value>Следующая</value>
+    </data>
+    <data name="PageCounter" xml:space="preserve">
+        <value>Страница {0} из {1}</value>
+    </data>
+</root>

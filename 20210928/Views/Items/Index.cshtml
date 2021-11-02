@@ -1,4 +1,6 @@
-﻿@model IEnumerable<_20210928.Models.Item>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model IEnumerable<_20210928.Models.Item>
+@inject IViewLocalizer Localizer
 
 @{
     ViewData["Title"] = "Index";
@@ -11,16 +13,16 @@
 
 <div>
     @if (currentPage > 1)
-    {<a asp-action="Index" asp-route-page="1" asp-route-sort-by="@sortBy"> First </a>}
+    {<a asp-action="Index" asp-route-page="1" asp-route-sort-by="@sortBy"> @Localizer["First"] </a>}
     @if (currentPage > 1)
-    {<a asp-action="Index" asp-route-page="@(currentPage - 1)" asp-route-sort-by="@sortBy"> Previous </a>}
+    {<a asp-action="Index" asp-route-page="@(currentPage - 1)" asp-route-sort-by="@sortBy"> @Localizer["Previous"] </a>}
 
-    Page @currentPage of @pageCount
+    @String.Format(Localizer["PageCounter"].Value, currentPage, pageCount)
 
     @if (currentPage < pageCount)
-    {<a asp-action="Index" asp-route-page="@(currentPage + 1)" asp-route-sort-by="@sortBy"> Next </a>}
+    {<a asp-action="Index" asp-route-page="@(currentPage + 1)" asp-route-sort-by="@sortBy"> @Localizer["Next"] </a>}
     @if (currentPage < pageCount)
-    {<a asp-action="Index" asp-route-page="@pageCount" asp-route-sort-by="@sortBy"> Last </a>}
+    {<a asp-action="Index" asp-route-page="@pageCount" asp-route-sort-by="@sortBy"> @Localizer["Last"] </a>}
 </div>
 
 <p>

@@ -1,0 +1,11 @@
+<root>
+    <data name="Name" xml:space="preserve">
+        <value>Название</value>
+    </data>
+    <data name="Description" xml:space="preserve">
+        <value>Описание</value>
+    </data>
+    <data name="Price" xml:space="preserve">
+        <value>Цена</value>
+    </data>
+</root>
